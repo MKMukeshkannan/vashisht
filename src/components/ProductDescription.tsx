@@ -17,7 +17,7 @@ export default function ProductDescription({
 }: prop) {
 
   return (
-    <section className="flex flex-col w-full min-w-64 p-3 lg:max-w-64 bg-red-100 border-4 border-black">
+    <section className="flex flex-col w-full min-h-80 min-w-64 p-3 lg:max-w-64 bg-red-100 border-4 border-black">
       <section className="relative w-full h-0 flex-grow">
         <Image
           fill
