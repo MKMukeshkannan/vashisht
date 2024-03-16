@@ -3,7 +3,7 @@ import Image from "next/image";
 interface prop {
   product_name: string;
   retailer: string;
-  price: number;
+  price: string;
   category: string;
   image_url: string;
 }
@@ -13,9 +13,8 @@ export default function ProductDescription({
   price,
   category,
   retailer,
-  image_url
+  image_url,
 }: prop) {
-
   return (
     <section className="flex flex-col w-full min-h-80 min-w-64 p-3 lg:max-w-64 bg-red-100 border-4 border-black">
       <section className="relative w-full h-0 flex-grow">
@@ -28,7 +27,6 @@ export default function ProductDescription({
       </section>
 
       <section className="flex mt-2 pt-1">
-
         <section className="w-0 flex-grow">
           <h1 className="font-mono whitespace-nowrap text-xl overflow-hidden text-ellipsis font-bold ">
             {product_name}
