@@ -1,16 +1,24 @@
 "use client";
 
+import {API_URL} from "@/libs/config";
+import {useAuth} from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+// import { toast, ToastContainer, ToastOptions } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+import {useRouter} from "next/navigation";
 
 export default function Login() {
+  const router = useRouter()
+
   const formSchema = z.object({
     userName: z.string().min(1, "Username is required "),
     password: z.string().min(1, "Password is required "),
   });
   type formType = z.infer<typeof formSchema>;
+  const {setUserName, userName} = useAuth(state=>state);
 
   const {
     register,
@@ -21,7 +29,26 @@ export default function Login() {
     resolver: zodResolver(formSchema),
   });
 
-  const onsubmit = () => {
+  const onsubmit = async (params: formType) => {
+    try{
+      const {data} = await axios.post(API_URL+"/retailers/login", {
+        "email": params.userName,
+        "password": params.password
+      })
+      if(data.message === "True"){
+        setUserName(params.userName)
+        router.push("/retailer")
+      }else if(data.message === "False"){
+        console.log("hello nighesh")
+        // toast.error("Wrong Password")
+      }else{
+        router.push("/auth/signup")
+      }
+      console.log(userName)
+      console.log(data)
+    }catch(err){
+      console.log(err)
+    }
     reset();
   };
 
@@ -47,14 +74,13 @@ export default function Login() {
           type="text"
         />
 
-        <Link
-          href="/retailer"
+        <button
           type="submit"
-          //disabled={isSubmitting}
+          disabled={isSubmitting}
           className="font-mono font-black p-5 max-w-fit h-10 inline-flex justify-center border border-accBlack rounded-md items-center bg-satRed text-lightBeige hover:bg-satRed-hover hover:text-white"
         >
           Login
-        </Link>
+        </button>
       </form>
     </main>
   );

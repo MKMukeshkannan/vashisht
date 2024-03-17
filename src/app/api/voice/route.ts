@@ -5,12 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { join } from "path";
 
+const openai = new OpenAI({
+    apiKey: OPEN_AI_KEY,
+});
+
 export async function POST(request: NextRequest) {
   try {
-    const openai = new OpenAI({
-      apiKey: OPEN_AI_KEY,
-    });
-
     const formData = await request.formData();
     const file: File | null = formData.get("file") as unknown as File;
 
