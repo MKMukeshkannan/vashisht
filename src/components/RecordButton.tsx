@@ -187,26 +187,28 @@ export default function RecordAudio() {
       {shopStatus === "fetchProducts" && (
         <>
           <Lottie animationData={Fetching} className="w-48 h-48" />
-          <button
-            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
-            onClick={() => {
-              setShopStatus("inactive");
-            }}
-            type="button"
-          >
-            NO
-          </button>
+          <section>
+            <button
+              className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+              onClick={() => {
+                setShopStatus("inactive");
+              }}
+              type="button"
+            >
+              NO
+            </button>
 
-          <button
-            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
-            onClick={fetchProducts}
-            type="button"
-          >
-            OK
-          </button>
-          <h1 className="text-center  font-mono text-xs font-bold">
-            {recentMsg}
-          </h1>
+            <button
+              className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+              onClick={fetchProducts}
+              type="button"
+            >
+              OK
+            </button>
+            <h1 className="text-center  font-mono text-xs font-bold">
+              {recentMsg}
+            </h1>
+          </section>
         </>
       )}
 
