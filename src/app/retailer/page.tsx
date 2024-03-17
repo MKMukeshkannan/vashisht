@@ -177,42 +177,42 @@ export default function Admin() {
             image_url="https://media.istockphoto.com/id/1209887384/photo/green-t-shirt-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=8M4gaRs-fUz6CdYEl4OblIoDvNjcRs8_Sbzs0VxWlMY="
             product_name="T-Shirt"
             price="300"
-            category="Cap"
+            category="shirt"
             retailer="Mukesh"
           />
           <ProductDescription
             image_url="https://crocodile.in/cdn/shop/files/7_478ea50e-71e9-43be-b224-1f19d0743a7a_grande.jpg?v=1707978564"
             product_name="Denim Jean"
             price="600"
-            category="Cap"
+            category="pant"
             retailer="Mukesh"
           />
           <ProductDescription
             image_url="https://crocodile.in/cdn/shop/products/1_41106bd8-85a5-4ee3-aceb-31879df3ce25_grande.jpg?v=1693207090"
             product_name="Black Denim Jean"
             price="800"
-            category="Cap"
+            category="pant"
             retailer="Mukesh"
           />
           <ProductDescription
             image_url="https://gradrsrbdbndasmpqbud.supabase.co/storage/v1/object/public/dummy/cap.png"
             product_name="Cap"
             price="50"
-            category="Cap"
+            category="cap"
             retailer="Mukesh"
           />
           <ProductDescription
             image_url="https://www.jiomart.com/images/product/original/rv0diktvsx/royal-son-hexagonal-blue-ray-cut-men-women-spectacles-frames-product-images-rv0diktvsx-0-202306252313.jpg?im=Resize=(500,630)"
             product_name="Sun Glases"
             price="70"
-            category="Cap"
+            category="specs"
             retailer="Mukesh"
           />
           <ProductDescription
             image_url="https://5.imimg.com/data5/YU/PD/WS/SELLER-61259432/men-s-winter-fashion-jacket-500x500.jpg"
             product_name="Jackets"
             price="1000"
-            category="Cap"
+            category="shirt"
             retailer="Mukesh"
           />
         </section>

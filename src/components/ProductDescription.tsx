@@ -23,7 +23,7 @@ export default function ProductDescription({
           fill
           className="object-cover object-center border-black border-2"
           src={image_url}
-          alt="java"
+          alt={product_name}
         />
       </section>
 
@@ -36,9 +36,12 @@ export default function ProductDescription({
           <h1 className="font-mono text-2xl font-bold">$ {price}</h1>
         </section>
 
-        {category && (
+        {(category === "specs" || category === "cap") && (
           <Link
-            href="/try-out"
+            href={{
+              pathname: "/try-out",
+              query: { product: category },
+            }}
             className="w-20 inline-flex items-center justify-center font-mono bg-red-400 font-bold border-2 border-black rounded-md "
           >
             Try On

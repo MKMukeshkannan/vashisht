@@ -26,7 +26,7 @@ export default function About() {
         >
           <h2 className="text-xl font-semibold mb-4">Our Mission:</h2>
           <p className="text-gray-700">
-            We're on a mission to simplify online shopping by leveraging
+            We&apos;re on a mission to simplify online shopping by leveraging
             intuitive technology that speaks your language, understands your
             preferences, and enhances your shopping environment.
           </p>
@@ -45,7 +45,7 @@ export default function About() {
               <b>Multi-lingual conversational assistance:</b> Our platform
               breaks language barriers by providing natural language
               understanding and generation capabilities in multiple languages.
-              Whether you're browsing from Tokyo or Toronto, our AI-powered
+              Whether you&apos;re browsing from Tokyo or Toronto, our AI-powered
               assistants ensure clear communication and personalized support.
             </li>
             <li className="text-gray-700 mb-2">
