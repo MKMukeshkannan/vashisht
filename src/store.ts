@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export const formSchema = z.object({
   name: z
@@ -26,6 +27,23 @@ export const formSchema = z.object({
   img_url: z.string().min(1),
 });
 export type formType = z.infer<typeof formSchema>;
+
+export interface userType{
+    userName: string | null;
+    setUserName: (name: string) => void;
+}
+export const useAuth = create<userType>()
+(
+    persist(
+    (set) => ({
+    userName: null,
+    setUserName: (name: string) => set({ userName: name })
+    }),{
+        name: "user",
+        storage: createJSONStorage(() => sessionStorage),
+        },
+    )
+)
 
 interface ProductState {
   products: formType[];

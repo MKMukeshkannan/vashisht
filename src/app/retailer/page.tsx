@@ -11,8 +11,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import {useAuth} from "@/store";
+import {useRouter} from "next/navigation";
 
 export default function Admin() {
+
+  const router = useRouter()
+  const {userName} = useAuth()
+  if(userName === null) router.push('/auth/login')
+
   const [productimage, setProductImage] = useState<File | undefined>(undefined);
   const formSchema = z.object({
     name: z
@@ -58,29 +65,35 @@ export default function Admin() {
   };
 
   const onSubmit = (data: formType) => {
-    const formData = new FormData();
 
     if (!productimage) return toast.error("Upload File");
 
-    formData.append("image", productimage);
-    formData.append("name", data.name);
-    formData.append("price", data.price);
-    formData.append("color", data.color);
-    formData.append("category", data.category);
-    formData.append("size", data.size);
-    formData.append("description", data.description);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result?.toString()?.split(',')[1] || '';
 
-    axios
-      .post(`${API_URL}api/admin/upload-product`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then(() => {
-        reset();
-        toast("SUCESS 🎉", toastOptions);
-      })
-      .catch(() => {
-        toast.error("ERROR ❌", toastOptions);
-      });
+      const obj = {
+        "category": data.category,
+        "color": data.color,
+        "size": data.size,
+        "price": data.price,
+        "description": data.description,
+        "name": data.name,
+        "retailer": userName,
+        "img_data": base64String
+      }
+
+      axios
+        .post(`${API_URL}/add_data`, obj)
+        .then(() => {
+          reset();
+          toast("SUCESS 🎉", toastOptions);
+        })
+        .catch(() => {
+          toast.error("ERROR ❌", toastOptions);
+        });
+    };
+    reader.readAsDataURL(productimage);
   };
 
   return (

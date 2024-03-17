@@ -1,10 +1,17 @@
 "use client";
+import {API_URL} from "@/libs/config";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast, ToastContainer, ToastOptions } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {useRouter} from "next/navigation";
 
 export default function SignUp() {
+
+  const router = useRouter()
+
   const formSchema = z.object({
     name: z.string().min(1, "Name is required "),
     username: z.string().min(1, "Name is required "),
@@ -13,7 +20,20 @@ export default function SignUp() {
   });
   type formType = z.infer<typeof formSchema>;
 
-  const onsubmit = () => {
+  const onsubmit = async (params: formType) => {
+    const obj = {
+      "name": params.name,
+      "email": params.username,
+      "password": params.password,
+      "location": params.location
+    }
+    console.log(obj)
+    try{
+      await axios.post(API_URL+"/retailers/signup", obj)
+      router.push("/auth/login")
+    }catch(err){
+      console.log(err)
+    }
     reset();
   };
 
@@ -62,14 +82,13 @@ export default function SignUp() {
           type="text"
         />
 
-        <Link
+        <button
           type="submit"
-          href="/auth/login"
-          //disabled={isSubmitting}
+          disabled={isSubmitting}
           className="font-mono font-black p-5 max-w-fit h-10 inline-flex justify-center border border-accBlack rounded-md items-center bg-satRed text-lightBeige hover:bg-satRed-hover hover:text-white"
         >
           Sign Up
-        </Link>
+        </button>
       </form>
     </main>
   );
