@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -61,13 +62,14 @@ export default function SignUp() {
           type="text"
         />
 
-        <button
+        <Link
           type="submit"
-          disabled={isSubmitting}
+          href="/auth/login"
+          //disabled={isSubmitting}
           className="font-mono font-black p-5 max-w-fit h-10 inline-flex justify-center border border-accBlack rounded-md items-center bg-satRed text-lightBeige hover:bg-satRed-hover hover:text-white"
         >
           Sign Up
-        </button>
+        </Link>
       </form>
     </main>
   );

@@ -1,9 +1,12 @@
 "use client";
 
-import { cache, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useProducts } from "@/store";
 import { API_URL } from "@/libs/config";
 import axios from "axios";
+import Lottie from "lottie-react";
+
+import { Idle, Fetching, Listening, Error } from "../assets";
 
 export default function RecordAudio() {
   const [permission, setPermission] = useState(false);
@@ -114,36 +117,35 @@ export default function RecordAudio() {
 
   if (!permission) {
     return (
-      <main className="relative text-center">
-        <section>
-          <section className="w-80 h-80" />
-        </section>
+      <main className="relative text-center flex flex-col space-y-4 items-center">
+        <Lottie animationData={Idle} className="w-48 h-48" />
 
         <button
-          className="absolute bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+          className=" bottom10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
           onClick={getMicrophonePermission}
           type="button"
         >
           Get Microphone
         </button>
+        <h1></h1>
       </main>
     );
   }
 
   return (
-    <main className="relative text-center">
+    <main className="relative flex flex-col space-y-4 text-center">
       {shopStatus === "inactive" && (
         <>
-          <section className="w-80 h-80" />
+          <Lottie animationData={Idle} className="w-48 h-48" />
           <button
             onClick={startRecording}
-            className="absolute bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover disabled:bg-opacity-80 disabled:hover:cursor-not-allowed "
+            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover disabled:bg-opacity-80 disabled:hover:cursor-not-allowed "
             type="button"
           >
             Start Recording
           </button>
 
-          <h1 className=" absolute bottom-0 mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
+          <h1 className="text-center  font-mono text-xs font-bold">
             {recentMsg}
           </h1>
         </>
@@ -151,15 +153,15 @@ export default function RecordAudio() {
 
       {shopStatus === "recording" && (
         <>
-          <section className="w-80 h-80" />
+          <Lottie animationData={Listening} className="w-48 h-48" />
           <button
-            className="absolute bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
             onClick={stopRecording}
             type="button"
           >
             Stop Recording
           </button>
-          <h1 className=" absolute bottom-0 mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
+          <h1 className="text-center font-mono text-xs font-bold">
             How can i help you ?
           </h1>
         </>
@@ -167,32 +169,42 @@ export default function RecordAudio() {
 
       {shopStatus === "fetching" && (
         <>
-          <section className="w-80 h-80" />
+          <Lottie animationData={Fetching} className="w-48 h-48" />
           <button
-            className="absolute bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+            className=" text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
             disabled
             onClick={stopRecording}
             type="button"
           >
             Loading
           </button>
-          <h1 className=" absolute bottom-0 mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
-            Kindly be patient, till i fetch your request..
+          <h1 className="text-center font-mono text-xs font-bold">
+            Fetching data
           </h1>
         </>
       )}
 
       {shopStatus === "fetchProducts" && (
         <>
-          <section className="w-80 h-80" />
+          <Lottie animationData={Fetching} className="w-48 h-48" />
           <button
-            className="absolute bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+            onClick={() => {
+              setShopStatus("inactive");
+            }}
+            type="button"
+          >
+            NO
+          </button>
+
+          <button
+            className="text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
             onClick={fetchProducts}
             type="button"
           >
-            Confirm
+            OK
           </button>
-          <h1 className=" absolute bottom-0 mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
+          <h1 className="text-center  font-mono text-xs font-bold">
             {recentMsg}
           </h1>
         </>
@@ -201,16 +213,16 @@ export default function RecordAudio() {
       {shopStatus === "error" && (
         <>
           <>
-            <section className="w-48 h-48" />
+            <Lottie animationData={Error} className="w-48 h-48" />
             <button
-              className=" bottom-10 mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
+              className="mx-auto left-0 right-0 text-center border-black border-2 rounded-md p-2 bg-satRed text-lightBeige font-mono font-black hover:bg-satRed-hover"
               onClick={stopRecording}
               disabled
               type="button"
             >
               Stop Recording
             </button>
-            <h1 className="  bottom-0 mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
+            <h1 className="mx-auto left-0 right-0 text-center  font-mono text-xs font-bold">
               There was an error
             </h1>
           </>

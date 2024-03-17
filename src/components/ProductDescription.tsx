@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface prop {
   product_name: string;
@@ -36,9 +37,12 @@ export default function ProductDescription({
         </section>
 
         {category && (
-          <button className="w-20 font-mono bg-red-400 font-bold border-2 border-black rounded-md ">
+          <Link
+            href="/try-out"
+            className="w-20 inline-flex items-center justify-center font-mono bg-red-400 font-bold border-2 border-black rounded-md "
+          >
             Try On
-          </button>
+          </Link>
         )}
       </section>
     </section>

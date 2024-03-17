@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -46,13 +47,14 @@ export default function Login() {
           type="text"
         />
 
-        <button
+        <Link
+          href="/retailer"
           type="submit"
-          disabled={isSubmitting}
+          //disabled={isSubmitting}
           className="font-mono font-black p-5 max-w-fit h-10 inline-flex justify-center border border-accBlack rounded-md items-center bg-satRed text-lightBeige hover:bg-satRed-hover hover:text-white"
         >
           Login
-        </button>
+        </Link>
       </form>
     </main>
   );
