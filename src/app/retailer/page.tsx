@@ -3,7 +3,7 @@
 import ProductDescription from "@/components/ProductDescription";
 import { API_URL } from "@/libs/config";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer, ToastOptions } from "react-toastify";
@@ -11,14 +11,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {useAuth} from "@/store";
-import {useRouter} from "next/navigation";
+import { useAuth } from "@/store";
+import { useRouter } from "next/navigation";
 
 export default function Admin() {
-
-  const router = useRouter()
-  const {userName} = useAuth()
-  if(userName === null) router.push('/auth/login')
+  const router = useRouter();
+  const { userName } = useAuth();
+  useEffect(() => {
+    if (userName === null) router.push("/auth/login");
+  }, []);
 
   const [productimage, setProductImage] = useState<File | undefined>(undefined);
   const formSchema = z.object({
@@ -65,23 +66,22 @@ export default function Admin() {
   };
 
   const onSubmit = (data: formType) => {
-
     if (!productimage) return toast.error("Upload File");
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      const base64String = reader.result?.toString()?.split(',')[1] || '';
+      const base64String = reader.result?.toString()?.split(",")[1] || "";
 
       const obj = {
-        "category": data.category,
-        "color": data.color,
-        "size": data.size,
-        "price": data.price,
-        "description": data.description,
-        "name": data.name,
-        "retailer": userName,
-        "img_data": base64String
-      }
+        category: data.category,
+        color: data.color,
+        size: data.size,
+        price: data.price,
+        description: data.description,
+        name: data.name,
+        retailer: userName,
+        img_data: base64String,
+      };
 
       axios
         .post(`${API_URL}/add_data`, obj)
