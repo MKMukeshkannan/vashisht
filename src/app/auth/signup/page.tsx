@@ -1,16 +1,15 @@
 "use client";
-import {API_URL} from "@/libs/config";
+import { API_URL } from "@/libs/config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast, ToastContainer, ToastOptions } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const formSchema = z.object({
     name: z.string().min(1, "Name is required "),
@@ -22,17 +21,17 @@ export default function SignUp() {
 
   const onsubmit = async (params: formType) => {
     const obj = {
-      "name": params.name,
-      "email": params.username,
-      "password": params.password,
-      "location": params.location
-    }
-    console.log(obj)
-    try{
-      await axios.post(API_URL+"/retailers/signup", obj)
-      router.push("/auth/login")
-    }catch(err){
-      console.log(err)
+      name: params.name,
+      email: params.username,
+      password: params.password,
+      location: params.location,
+    };
+    console.log(obj);
+    try {
+      await axios.post(API_URL + "/retailers/signup", obj);
+      router.push("/auth/login");
+    } catch (err) {
+      console.log(err);
     }
     reset();
   };
@@ -79,7 +78,7 @@ export default function SignUp() {
           placeholder="Password"
           {...register("password")}
           className={`shadow-[5px_5px_0px_0px_rgba(0,0,0)] ${errors.password && "shadow-[5px_5px_0px_0px_rgba(220,0,0)]"} h-10 text-2xl rounded-md border border-accBlack focus:outline-none p-1.5 font-mono`}
-          type="text"
+          type="password"
         />
 
         <button
@@ -87,7 +86,7 @@ export default function SignUp() {
           disabled={isSubmitting}
           className="font-mono font-black p-5 max-w-fit h-10 inline-flex justify-center border border-accBlack rounded-md items-center bg-satRed text-lightBeige hover:bg-satRed-hover hover:text-white"
         >
-          Sign Up
+          {isSubmitting ? "Loading" : "Sign Up"}
         </button>
       </form>
     </main>
